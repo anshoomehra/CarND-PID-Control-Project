@@ -3,6 +3,58 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+PID Controllers
+
+A proportional–integral–derivative controller (PID controller) is a control loop feedback mechanism (controller) commonly used in industrial control systems. A PID controller continuously calculates an error value {\displaystyle e(t)} e(t) as the difference between a desired setpoint and a measured process variable and applies a correction based on proportional, integral, and derivative terms (sometimes denoted P, I, and D respectively) which give their name to the controller type.
+
+In this project, we are attempting to make use of PID controller to effectively compute steering measurements to drive the simulation vehcile developed in Unity to stay on track. Simulator produces the error signal as the distance between the actual car position on the road and a reference trajectory, known as cross-track error (cte). The PID controller is designed to minimize the distance to this reference trajectory.
+
+P - Proportional Gain
+
+The proportional term computes an output proportional to the cross-track error. P - controller alone may not give desired result and will oscillates about the target, as meeting linear target to reference will either overshoot or stay under. In this project, the proportional gain contributes a control output to the steering angle of the form -K_p cte with a positive constant K_p.
+
+D - Differential Gain
+
+The oscillations effect by P_conroller can be mitigated by a term proportional to the derivative of the cross-track error. The derivative gain contributes a control output of the form -K_d d/dt cte, with a positive constant K_d.
+
+I - Integral Gain
+
+There could be possible biases in real-life scenarios like wheel drift, miss alignment becuase of road conditions or mechanical faults. In real life, we steer harder/conter to these situation to keep vehicle on track, in our project third contribution of integral gain can help offset these sitiation. This approach sums up the cross-track error over time, & corresponding contribution to the steering angle is given by -K_i sum(cte).
+
+Hyperparameter Tuning
+
+All parameters were tuned manually to have better understanding of how each parameter affect the outcomes. Approach followed was simple and organic evolution of PID params as stated below:
+
+* Started with PID as 0,0,0, to see cte produced & behaviour.
+* Started playing with just P, keeping I,D as zeros.
+* Tried aggresive value of 0.5 starts to drive vehicle but soon catch into bad osciallates and being driven out of track.
+* After we tries, P of 0.1 seems to have been giving decent result and vehcile to osciallte on sharp turns.
+* At this stage, I introduced, D to dampen oscialltion, I started with values in contrast of P, .1  then .001 and then .0001, .0001 gave a decent stable performance and also indicactor of proportinality these parameters to be dealt with.
+* At this stage, vehicle was running fairly well, but will go out of track at 2 very sharp turns (I have not used braking logic, was trying to speed low and attempt to manage control with param optimizations.
+* It was perhaps logical to introduce I, to offset error introduced by change in trajectory on sharp turns. After some trial value of 0.6 made the vehcile run full loop.
+* This was fairly confident stage to expriment with params to smoothen out run and try to keep vehicle within bounds. Below is the summary of my exploration .. 
+
+  // TODO: Initialize the pid variable.
+  // First sucess run manual observations: pid.Init(0.1, 0.0001,  0.5);
+     // Almost smooth @ pid.Init(0.1, 0.0001,  0.6);
+      // Getting there @ pid.Init(0.1, 0.0001,  0.7);
+        // Perhaps we can improve corners a bit more @ pid.Init(0.1, 0.0002,  0.9);
+          // I guess I am hapy with  this !! pid.Init(0.09, 0.0002,  1.5);
+          // And this : pid.Init(0.1, 0.0002,  1.5);
+          // VStill touching yellow lines -- pid.Init(0.15, 0.0002,  2.0);
+          // Now with in yellow lines : pid.Init(0.20, 0.0002,  3.0);
+          // Bit jerky on sharp turns: pid.Init(0.20, 0.0003,  3.0);
+  // Let's stop here .. :-) & try Twiddle !!
+  pid.Init(0.20, 0.0003,  3.5);
+  
+When I tried to create video of outcome for submission, I realized that, high CPU consumption impacted performance and subsequently outcomes. I end up using my phone to record, but something to keep in mind that same params may or mat noy work on different computer and when designed for real use, CPU clock rate must be kept in consideratios for optimizations.
+
+Opportunities to further improve:
+* Twiddle, I did not use it becuase of time contraint but would like to try and see how best it can help optimize. I am really impressed with the idea though. 
+* Increasing speed will be good challenge and will require adpative throttle as in real-life.
+* Smooth control on sharp turns, I think above two may significantly help & even more so have bias introduction based on error may help .. 
+
+
 ## Dependencies
 
 * cmake >= 3.5
