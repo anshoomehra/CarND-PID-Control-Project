@@ -35,16 +35,27 @@ All parameters were tuned manually to have better understanding of how each para
 * This was fairly confident stage to expriment with params to smoothen out run and try to keep vehicle within bounds. Below is the summary of my exploration .. 
 
   // TODO: Initialize the pid variable.
+  
   // First sucess run manual observations: pid.Init(0.1, 0.0001,  0.5);
+  
      // Almost smooth @ pid.Init(0.1, 0.0001,  0.6);
+     
       // Getting there @ pid.Init(0.1, 0.0001,  0.7);
+      
         // Perhaps we can improve corners a bit more @ pid.Init(0.1, 0.0002,  0.9);
+        
           // I guess I am hapy with  this !! pid.Init(0.09, 0.0002,  1.5);
+          
           // And this : pid.Init(0.1, 0.0002,  1.5);
+          
           // VStill touching yellow lines -- pid.Init(0.15, 0.0002,  2.0);
+          
           // Now with in yellow lines : pid.Init(0.20, 0.0002,  3.0);
+          
           // Bit jerky on sharp turns: pid.Init(0.20, 0.0003,  3.0);
+          
   // Let's stop here .. :-) & try Twiddle !!
+  
   pid.Init(0.20, 0.0003,  3.5);
 
 Observation:
