@@ -19,7 +19,7 @@ The oscillations effect by P_conroller can be mitigated by a term proportional t
 
 I - Integral Gain
 
-There could be possible biases in real-life scenarios like wheel drift, miss alignment becuase of road conditions or mechanical faults. In real life, we steer harder/conter to these situation to keep vehicle on track, in our project third contribution of integral gain can help offset these sitiation. This approach sums up the cross-track error over time, & corresponding contribution to the steering angle is given by -K_i sum(cte).
+There could be possible biases in real-life scenarios like wheel drift, miss alignment becuase of road conditions and/or mechanical faults. In real life, we steer harder/counter on these situations to keep vehicle on track, in our project third contribution of integral gain can help offset these sitiation. This approach sums up the cross-track error over time, & corresponding contribution to the steering angle is given by -K_i sum(cte).
 
 Hyperparameter Tuning
 
@@ -28,10 +28,10 @@ All parameters were tuned manually to have better understanding of how each para
 * Started with PID as 0,0,0, to see cte produced & behaviour.
 * Started playing with just P, keeping I,D as zeros.
 * Tried aggresive value of 0.5 starts to drive vehicle but soon catch into bad osciallates and being driven out of track.
-* After we tries, P of 0.1 seems to have been giving decent result and vehcile to osciallte on sharp turns.
-* At this stage, I introduced, D to dampen oscialltion, I started with values in contrast of P, .1  then .001 and then .0001, .0001 gave a decent stable performance and also indicactor of proportinality these parameters to be dealt with.
-* At this stage, vehicle was running fairly well, but will go out of track at 2 very sharp turns (I have not used braking logic, was trying to speed low and attempt to manage control with param optimizations.
-* It was perhaps logical to introduce I, to offset error introduced by change in trajectory on sharp turns. After some trial value of 0.6 made the vehcile run full loop.
+* After few tries, P of 0.1 seems to have been giving decent result and vehcile to osciallte on sharp turns.
+* At this stage, introduced D to dampen oscialltions, started with values in contrast of P, .1  then .001 and then .0001, .0001 gave a decent stable performance and also indicactor of proportinality these parameters to be dealt with.
+* At this stage, vehicle was running fairly well, but will go out of track at 2 very sharp turns (I have not used braking logic, was trying to keep low speed and attempt to manage control with param optimizations.
+* It was perhaps logical to introduce I-gain, to offset error introduced by change in trajectory on sharp turns. After some trial-error value of 0.6 made the vehcile run full loop.
 * This was fairly confident stage to expriment with params to smoothen out run and try to keep vehicle within bounds. Below is the summary of my exploration .. 
 
   // TODO: Initialize the pid variable.
@@ -46,13 +46,14 @@ All parameters were tuned manually to have better understanding of how each para
           // Bit jerky on sharp turns: pid.Init(0.20, 0.0003,  3.0);
   // Let's stop here .. :-) & try Twiddle !!
   pid.Init(0.20, 0.0003,  3.5);
-  
-When I tried to create video of outcome for submission, I realized that, high CPU consumption impacted performance and subsequently outcomes. I end up using my phone to record, but something to keep in mind that same params may or mat noy work on different computer and when designed for real use, CPU clock rate must be kept in consideratios for optimizations.
+
+Observation:
+When I tried to create video of outcome for submission, I realized that, high CPU consumption impacted performance and subsequently outcomes, i.e vehicle was not as smooth as prior run. I end up using my phone to record, but something to keep in mind that same params may or mat noy work on different computers and when designed for real use, CPU clock rate must be kept in consideratios for optimizations.
 
 Opportunities to further improve:
 * Twiddle, I did not use it becuase of time contraint but would like to try and see how best it can help optimize. I am really impressed with the idea though. 
-* Increasing speed will be good challenge and will require adpative throttle as in real-life.
-* Smooth control on sharp turns, I think above two may significantly help & even more so have bias introduction based on error may help .. 
+* Increasing speed will be good challenge and will require adpative throttle, braking as in real-life.
+* Smooth control on sharp turns, I think above two may significantly help & even more so have additoonal bias introduction based on error may help .. 
 
 
 ## Dependencies
