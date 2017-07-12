@@ -55,6 +55,7 @@ Opportunities to further improve:
 * Increasing speed will be good challenge and will require adpative throttle, braking as in real-life.
 * Smooth control on sharp turns, I think above two may significantly help & even more so have additoonal bias introduction based on error may help .. 
 
+## Video Capture: https://youtu.be/pU-hx5PEhwc
 
 ## Dependencies
 
