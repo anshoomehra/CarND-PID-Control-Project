@@ -3,25 +3,25 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
-PID Controllers
+## PID Controllers
 
 A proportional–integral–derivative controller (PID controller) is a control loop feedback mechanism (controller) commonly used in industrial control systems. A PID controller continuously calculates an error value {\displaystyle e(t)} e(t) as the difference between a desired setpoint and a measured process variable and applies a correction based on proportional, integral, and derivative terms (sometimes denoted P, I, and D respectively) which give their name to the controller type.
 
 In this project, we are attempting to make use of PID controller to effectively compute steering measurements to drive the simulation vehcile developed in Unity to stay on track. Simulator produces the error signal as the distance between the actual car position on the road and a reference trajectory, known as cross-track error (cte). The PID controller is designed to minimize the distance to this reference trajectory.
 
-P - Proportional Gain
+## P - Proportional Gain
 
 The proportional term computes an output proportional to the cross-track error. P - controller alone may not give desired result and will oscillates about the target, as meeting linear target to reference will either overshoot or stay under. In this project, the proportional gain contributes a control output to the steering angle of the form -K_p cte with a positive constant K_p.
 
-D - Differential Gain
+## D - Differential Gain
 
 The oscillations effect by P_conroller can be mitigated by a term proportional to the derivative of the cross-track error. The derivative gain contributes a control output of the form -K_d d/dt cte, with a positive constant K_d.
 
-I - Integral Gain
+## I - Integral Gain
 
 There could be possible biases in real-life scenarios like wheel drift, miss alignment becuase of road conditions and/or mechanical faults. In real life, we steer harder/counter on these situations to keep vehicle on track, in our project third contribution of integral gain can help offset these sitiation. This approach sums up the cross-track error over time, & corresponding contribution to the steering angle is given by -K_i sum(cte).
 
-Hyperparameter Tuning
+## Hyperparameter Tuning
 
 All parameters were tuned manually to have better understanding of how each parameter affect the outcomes. Approach followed was simple and organic evolution of PID params as stated below:
 
@@ -58,10 +58,10 @@ All parameters were tuned manually to have better understanding of how each para
   
   pid.Init(0.20, 0.0003,  3.5);
 
-Observation:
+## Observation:
 When I tried to create video of outcome for submission, I realized that, high CPU consumption impacted performance and subsequently outcomes, i.e vehicle was not as smooth as prior run. I end up using my phone to record, but something to keep in mind that same params may or mat noy work on different computers and when designed for real use, CPU clock rate must be kept in consideratios for optimizations.
 
-Opportunities to further improve:
+## Opportunities to further improve:
 * Twiddle, I did not use it becuase of time contraint but would like to try and see how best it can help optimize. I am really impressed with the idea though. 
 * Increasing speed will be good challenge and will require adpative throttle, braking as in real-life.
 * Smooth control on sharp turns, I think above two may significantly help & even more so have additoonal bias introduction based on error may help .. 
